@@ -31,6 +31,11 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'home',
+    'allauth.socialaccount',
+    'allauth.account',
+    'allauth',
+    'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -47,6 +52,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 ROOT_URLCONF = 'User_App_Test.urls'
@@ -103,9 +112,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ja'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tokyo'
 
 USE_I18N = True
 
@@ -118,3 +127,25 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+#allauth
+SITE_ID = 1
+LOGIN_REDIRECT_URL = 'home'
+ACCOUNT_LOGOUT_REDIRECT_URL = '/accounts/login/'
+#Authentication
+ACCOUNT_EMAIL_VARIFICATION = 'mandatory' # ユーザ登録時に確認メールを送信するか(none=送信しない, mandatory=送信する)
+ACCOUNT_EMAIL_REQUIRED = True # ユーザ登録にメルアド必須にする
+ACCOUNT_AUTHENTICATION_METHOD = 'email' # 認証方式を「メルアドとパスワード」に設定
+# for email debug settings
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+"""
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# メールサーバーへの接続設定
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'spam@gmail.com'
+EMAIL_HOST_PASSWORD = 'gmailパスワード'
+EMAIL_USE_TLS = True
+"""
